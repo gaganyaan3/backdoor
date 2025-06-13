@@ -7,3 +7,25 @@ helpful backdoor
 
 0 */1 * * * python3 get_ip.py --host localhost --port 8888
 ```
+
+### 2. Check internet status with custom systemd service
+```
+root@lp-arm-2:/etc/systemd/system# cat internet_check.service 
+[Unit]
+Description=internet_check
+Documentation=internet_check
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+Restart=on-failure
+
+ExecStart=/opt/internet_check.sh
+
+[Install]
+WantedBy=multi-user.target
+
+```
